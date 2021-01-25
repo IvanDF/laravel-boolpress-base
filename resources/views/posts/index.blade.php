@@ -5,15 +5,14 @@
 @endsection
 <!-- set main content -->
 @section ('main-content')
-    <div class="jumbotron jumbotron-fluid">
-        <div class="container">
-            @forelse ($posts as $post)
-                <h2 class="display-4">{{$post['title']}}</h2>
-                <h5 class="display-4">{{$post['author']}}</h5>
-                <small class="display-4">{{$post['created_at']}}</small>
+        <div class="container mb-5">
+        @forelse($posts as $post)
+                <h2 class="display-4 mt-5">{{$post->title}}</h2>
+                <h5 class="display-4">{{$post->author}}</h5>
+                <p class="display-4 small">{{$post->created_at->format('d/m/Y')}}</p>
+                <a href="{{ route('posts.show', $post->slug) }}">Show</a>
                 @empty
                 <h5>There's no Posts <a href="{{ route('posts.create') }}">Create a new one</a></h5>
-            @endforelse
+        @endforelse
         </div>
-    </div>
 @endsection
