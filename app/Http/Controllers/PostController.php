@@ -28,7 +28,6 @@ class PostController extends Controller
      */
     public function create()
     {
-
         return view('posts.create');
     }
 
@@ -100,16 +99,13 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
         // Get data from form
         $data = $request->all();
 
         // Validation
         $request->validate($this->ruleValidate());
-        
-        // Get post to update
-        $post = Post::find($id);
 
         // Change slug
         $data['slug'] = Str::slug($data['title'], '-');
@@ -138,9 +134,11 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        //
+        $post->delete();
+
+        return redirect()->route('posts.index');
     }
 
     // Validation Rule
