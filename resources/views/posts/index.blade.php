@@ -19,5 +19,8 @@
                 @empty
                 <h5>There's no Posts <a href="{{ route('posts.create') }}">Create a new one</a></h5>
         @endforelse
+        <div class="mx-auto mt-5 mb-5" style="width: 250px">
+            {{$posts->links()}}
+        </div>
         </div>
 @endsection
