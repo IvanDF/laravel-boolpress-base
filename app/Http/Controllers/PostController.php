@@ -136,9 +136,12 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        $post->delete();
+        $ref = $post->title;
+        $deleted = $post->delete();
 
-        return redirect()->route('posts.index');
+        if ($deleted) {
+            return redirect()->route('posts.index')->with('deleted', $ref);
+        }
     }
 
     // Validation Rule

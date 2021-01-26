@@ -6,6 +6,11 @@
 <!-- set main content -->
 @section ('main-content')
         <div class="container mb-5">
+        @if (session('deleted'))
+        <div class="alert alert-danger">
+            {{ session('deleted') }} succesfully deleted.
+        </div>
+        @endif
         @forelse($posts as $post)
                 <h2 class="display-4 mt-5">{{$post->title}}</h2>
                 <h5 class="display-4">{{$post->author}}</h5>

@@ -9,15 +9,15 @@
         <h2>Create new post</h2>
 
         @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                <li>
-                    <h6>{{$error}}</h6>
-                </li>
-                @endforeach
-            </ul>
-        </div>
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                    <li>
+                        <h6>{{$error}}</h6>
+                    </li>
+                    @endforeach
+                </ul>
+            </div>
         @endif
 
         <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
