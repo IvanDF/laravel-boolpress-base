@@ -18,6 +18,7 @@ class PostController extends Controller
     {
         $posts = Post::orderBy('created_at', 'desc')->paginate(5);
         // dd($posts);
+        
         return view('posts.index', compact('posts'));
     }
 
@@ -75,6 +76,8 @@ class PostController extends Controller
     public function show($slug)
     {
         $post = Post::where('slug', $slug)->first();
+
+        $this->erorrPages($post);
 
         return view('posts.show', compact('post'));
     }
@@ -152,5 +155,10 @@ class PostController extends Controller
             'img_url' => 'image',
             'author' => 'required',
         ];
+    }
+    private function erorrPages($var) {
+        if(empty($var)) {
+            abort(404);
+        }
     }
 }

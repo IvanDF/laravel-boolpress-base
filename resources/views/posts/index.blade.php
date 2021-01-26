@@ -12,12 +12,22 @@
         </div>
         @endif
         @forelse($posts as $post)
-                <h2 class="display-4 mt-5">{{$post->title}}</h2>
-                <h5 class="display-4">{{$post->author}}</h5>
-                <p class="display-4 small">{{$post->created_at->format('d/m/Y')}}</p>
-                <a href="{{ route('posts.show', $post->slug) }}">Show</a>
-                @empty
-                <h5>There's no Posts <a href="{{ route('posts.create') }}">Create a new one</a></h5>
+            <div class="card text-center mt-5 mb-5">
+                <div class="card-header bg-primary text-white">
+                    {{$post->author}}
+                </div>
+                <div class="card-body bg-transparent text-dark">
+                    <h5 class="card-title">{{$post->title}}</h5>
+                    <a class="btn btn-primary" href="{{ route('posts.show', $post->slug) }}">Show</a>
+                </div>
+                <div class="card-footer text-muted bg-primary">
+                    <small class="text-white">
+                        {{$post->created_at->format('d/m/Y')}}
+                    </small>
+                </div>
+            </div>
+            @empty
+            <h5>There's no Posts <a href="{{ route('posts.create') }}">Create a new one</a></h5>
         @endforelse
         <div class="mx-auto mt-5 mb-5" style="width: 250px">
             {{$posts->links()}}
