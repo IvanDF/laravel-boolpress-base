@@ -15,4 +15,9 @@ class Post extends Model
         'img_url',
         'author',
     ];
+
+    // Posts - Tags
+    public function tags() {
+        return $this->belongsToMany('App\Tag');
+    }
 }

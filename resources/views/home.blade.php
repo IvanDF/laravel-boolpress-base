@@ -11,4 +11,4 @@
             <p class="lead">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ea quis maxime dolor ab nisi enim eaque est, eveniet, suscipit quisquam aut corporis facere praesentium. Itaque qui aperiam laborum repellat eius.</p>
         </div>
     </div>
-@endsection
+@endsection 

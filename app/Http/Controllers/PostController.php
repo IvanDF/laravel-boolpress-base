@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use App\Post;
+use App\Tag;
 
 class PostController extends Controller
 {
@@ -29,7 +30,11 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('posts.create');
+        
+        // Get all tags
+
+        $tags = Tag::all();
+        return view('posts.create', compact('tags'));
     }
 
     /**
@@ -60,7 +65,12 @@ class PostController extends Controller
         $newPost = new Post();
         $newPost->fill($data); // fillable model
         $saved = $newPost->save();
+
+        // Info 
         if ($saved) {
+            if (!empty($data['tags'])) {
+                $newPost->tags()->attach($data['tags']);
+            }
             return redirect()->route('posts.index');
         } else {
             return redirect()->route('home');
@@ -76,10 +86,11 @@ class PostController extends Controller
     public function show($slug)
     {
         $post = Post::where('slug', $slug)->first();
+        $tags = Tag::all();
 
         $this->erorrPages($post);
 
-        return view('posts.show', compact('post'));
+        return view('posts.show', compact('post', 'tags'));
     }
 
     /**
@@ -91,8 +102,9 @@ class PostController extends Controller
     public function edit($slug)
     {
         $post = Post::where('slug', $slug)->first();
+        $tags = Tag::all();
 
-        return view('posts.edit', compact('post'));
+        return view('posts.edit', compact('post', 'tags'));
     }
 
     /**
@@ -125,6 +137,11 @@ class PostController extends Controller
         $updated = $post->update($data); // For fillalbe model
 
         if ($updated) {
+            if (!empty($data['tags'])) {
+                $post->tags()->sync($data['tags']);
+            } else {
+                $post->tags()->detach();
+            }
             return redirect()->route('posts.show', $post->slug);
         } else {
             return redirect()->route('home');
@@ -140,9 +157,13 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $ref = $post->title;
+        $post->tags()->detach();
         $deleted = $post->delete();
 
         if ($deleted) {
+            if(!empty($image)) {
+                Storage::disk('public')->delete($image);
+            }
             return redirect()->route('posts.index')->with('deleted', $ref);
         }
     }

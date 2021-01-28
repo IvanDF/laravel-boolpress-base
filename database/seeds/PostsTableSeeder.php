@@ -15,8 +15,7 @@ class PostsTableSeeder extends Seeder
      */
     public function run(Faker $faker)
     {
-
-        Post::truncate();
+        // Post::truncate();
 
         for( $i = 0; $i < 20; $i++ ) {
             // Vars
